@@ -29,5 +29,33 @@ describe('Teste do Painel: Alta Retroativa', () => {
         // 4. Validação básica
         cy.get('body').should('not.contain.text', 'Erro 500');
         cy.log('Filtro aplicado com sucesso!');
+
+        // 5. Exportar para Excel com lógica de segurança robusta
+        cy.log('Exportando para Excel...');
+        cy.get('body', { timeout: 15000 }).then(($body) => {
+            const excelButtons = [
+                '#exportExcel',
+                '#exportarExcel',
+                '#btnExcel',
+                '#btnExportar',
+                '.dt-button > span'
+            ];
+
+            let excelSelector = null;
+            for (const selector of excelButtons) {
+                if ($body.find(selector).length > 0) {
+                    excelSelector = selector;
+                    break;
+                }
+            }
+
+            if (excelSelector) {
+                cy.get(excelSelector, { timeout: 15000 })
+                    .first()
+                    .scrollIntoView()
+                    .click({ force: true });
+                cy.wait(1500);
+            }
+        });
     });
 });

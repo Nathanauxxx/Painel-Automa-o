@@ -112,6 +112,32 @@ describe('Teste do Painel: Gerencial Fugulin', () => {
       cy.get('body').should('not.contain.text', 'Erro 500');
       cy.get('body').should('not.contain.text', 'Exception');
       cy.get('body').should('not.contain.text', 'stack trace');
+
+      // Exportar para Excel com lógica de segurança robusta
+      cy.log('Exportando para Excel...');
+      const excelButtons = [
+        '#exportExcel',
+        '#exportarExcel',
+        '#btnExcel',
+        '#btnExportar',
+        '.dt-button > span'
+      ];
+
+      let excelSelector = null;
+      for (const selector of excelButtons) {
+        if ($body.find(selector).length > 0) {
+          excelSelector = selector;
+          break;
+        }
+      }
+
+      if (excelSelector) {
+        cy.get(excelSelector, { timeout: 15000 })
+          .first()
+          .scrollIntoView()
+          .click({ force: true });
+        cy.wait(1500);
+      }
     });
 
     cy.url().then((urlAtual) => {

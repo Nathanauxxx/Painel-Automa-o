@@ -1,9 +1,8 @@
 describe('Teste do Painel: Atendimento Complementar - IPQ', () => {
-  it('Mapear seletores e fluxo principal', () => {
+  it('Deve preencher os filtros, buscar e exportar para excel', () => {
     const painelUrl = 'http://painelmvhomolog.phcnet.usp.br/PainelAtendComplementarIPQ';
 
-    cy.log('TODO: validar URL real e completar automacao do painel.');
     cy.loginSeguroPainel({ painelUrl });
-    cy.pause();
+    cy.automatizarPainelPadrao();
   });
 });
